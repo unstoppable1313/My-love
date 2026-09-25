@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ek Chhota Sa Sawaal ❤️</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffd6e7, #fff0f5);
+    overflow: hidden;
+  }
+
+  .card {
+    width: min(92vw, 430px);
+    min-height: 500px;
+    padding: 42px 24px;
+    border-radius: 28px;
+    background: rgba(255,255,255,.92);
+    box-shadow: 0 20px 60px rgba(180, 50, 100, .18);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .heart {
+    font-size: 58px;
+    animation: beat 1.2s infinite;
+  }
+
+  @keyframes beat {
+    50% { transform: scale(1.12); }
+  }
+
+  h1 {
+    color: #e83e70;
+    margin: 15px 0 10px;
+    font-size: 30px;
+  }
+
+  p {
+    color: #555;
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .buttons {
+    position: relative;
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  button {
+    border: 0;
+    border-radius: 999px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #yes {
+    background: #e83e70;
+    color: white;
+    box-shadow: 0 8px 20px rgba(232,62,112,.3);
+    z-index: 3;
+  }
+
+  #no {
+    background: #eee;
+    color: #555;
+    z-index: 4;
+  }
+
+  .success {
+    display: none;
+  }
+
+  .success h2 {
+    color: #e83e70;
+    font-size: 34px;
+  }
+
+  .success p {
+    margin-bottom: 0;
+  }
+
+  .floating {
+    position: fixed;
+    bottom: -30px;
+    font-size: 22px;
+    animation: floatUp 5s linear forwards;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @keyframes floatUp {
+    to {
+      transform: translateY(-110vh) rotate(20deg);
+      opacity: 0;
+    }
+  }
+
+  .small {
+    font-size: 13px;
+    color: #999;
+    margin-top: 15px;
+  }
+</style>
+</head>
+
+<body>
+<div class="card">
+
+  <div id="question">
+    <div class="heart">❤️</div>
+    <h1>Ek chhota sa sawaal...</h1>
+    <p>
+      Kya tum mujhe maaf karti ho? 🥺<br>
+      Dil se pooch raha hoon...
+    </p>
+
+    <div class="buttons">
+      <button id="yes">Haan ❤️</button>
+      <button id="no">Nahi 🙈</button>
+    </div>
+
+    <div class="small">P.S. Nahi dabane se kuch ajeeb hoga 😜</div>
+  </div>
+
+  <div id="success" class="success">
+    <div class="heart">💖</div>
+    <h2>Yayyy! 🥹❤️</h2>
+    <p>
+      Thank you for forgiving me.<br>
+      Ab ek tight wali hug banti hai 🤗❤️<br><br>
+      I love you! 💕
+    </p>
+  </div>
+
+</div>
+
+<script>
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const question = document.getElementById("question");
+const success = document.getElementById("success");
+
+let noClicks = 0;
+
+no.addEventListener("click", () => {
+  noClicks++;
+
+  // Haan button grows progressively
+  const scale = Math.min(1 + noClicks * 0.22, 4.2);
+  yes.style.transform = `scale(${scale})`;
+
+  // Nahi button gets smaller
+  const noScale = Math.max(1 - noClicks * 0.13, 0);
+  no.style.transform = `scale(${noScale})`;
+  no.style.opacity = noClicks >= 7 ? "0" : String(Math.max(1 - noClicks * 0.12, 0));
+
+  // Once Haan is huge, make Nahi completely disappear
+  if (noClicks >= 9) {
+    no.style.display = "none";
+    yes.style.transform = "scale(4.2)";
+  }
+
+  createHeart();
+});
+
+yes.addEventListener("click", () => {
+  question.style.display = "none";
+  success.style.display = "block";
+
+  for (let i = 0; i < 18; i++) {
+    setTimeout(createHeart, i * 100);
+  }
+});
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "floating";
+  heart.textContent = ["❤️","💕","💖","💗","💘"][Math.floor(Math.random()*5)];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random()*3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6500);
+}
+</script>
+</body>
+</html>
