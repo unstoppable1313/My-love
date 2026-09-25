@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>For My Love ❤️</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif}
+body{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at top,#ffe8f0,#ffd1df 45%,#f7b5cc);
+  overflow:hidden;color:#333
+}
+.card{
+  width:min(92vw,440px);min-height:560px;padding:38px 25px;
+  background:rgba(255,255,255,.94);border-radius:32px;text-align:center;
+  box-shadow:0 25px 70px rgba(115,25,65,.22);position:relative;z-index:5;
+  display:flex;align-items:center;justify-content:center
+}
+.screen{width:100%}
+.heart{font-size:65px;animation:beat 1.15s infinite}
+@keyframes beat{50%{transform:scale(1.13)}}
+h1{color:#e93670;font-size:31px;margin:16px 0 8px}
+h2{color:#e93670;font-size:34px;margin:15px 0}
+.message{font-size:17px;line-height:1.7;color:#555;margin:0 auto 30px;max-width:350px}
+.buttons{height:210px;position:relative;display:flex;align-items:center;justify-content:center;gap:18px}
+button{
+  border:0;border-radius:999px;padding:15px 29px;font-size:18px;
+  font-weight:700;cursor:pointer;transition:transform .45s ease,opacity .45s ease;
+  touch-action:manipulation
+}
+#yes{background:#e93670;color:#fff;box-shadow:0 9px 25px #e9367044;z-index:3}
+#no{background:#eee;color:#555;z-index:4}
+.note{font-size:12px;color:#aaa}
+.hidden{display:none}
+.big-love{font-size:52px}
+.sparkle{position:fixed;bottom:-40px;z-index:1;pointer-events:none;animation:rise linear forwards}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+.confetti{position:fixed;top:-20px;z-index:10;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+<div class="card">
+  <section id="question" class="screen">
+    <div class="heart">❤️</div>
+    <h1>Ek chhota sa sawaal...</h1>
+    <p class="message">
+      Mujhse galti ho gayi 🥺<br>
+      Main dil se sorry bol raha hoon.<br><br>
+      <b>Kya tum mujhe maaf karti ho?</b>
+    </p>
+    <div class="buttons">
+      <button id="yes">Haan ❤️</button>
+      <button id="no">Nahi 🙈</button>
+    </div>
+    <div class="note">Ek baar dil se soch lena... 🥺</div>
+  </section>
+
+  <section id="success" class="screen hidden">
+    <div class="big-love">💖</div>
+    <h2>Thank You! 🥹</h2>
+    <p class="message">
+      Mujhe pata tha tumhara dil bahut pyara hai ❤️<br><br>
+      No more fighting. Sirf pyaar, hugs aur smiles. 🤗💕<br><br>
+      <b>I Love You ❤️</b>
+    </p>
+    <div style="font-size:35px">🌹 🫶🏻 🌹</div>
+  </section>
+</div>
+
+<script>
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+const question=document.getElementById("question");
+const success=document.getElementById("success");
+let clicks=0;
+
+no.addEventListener("click",()=>{
+  clicks++;
+  const grow=Math.min(1+clicks*.25,4.5);
+  yes.style.transform=`scale(${grow})`;
+  no.style.transform=`scale(${Math.max(1-clicks*.13,0)})`;
+  no.style.opacity=String(Math.max(1-clicks*.13,0));
+  if(clicks>=8){
+    no.style.display="none";
+    yes.style.transform="scale(4.5)";
+  }
+  floatLove();
+});
+
+yes.addEventListener("click",()=>{
+  question.classList.add("hidden");
+  success.classList.remove("hidden");
+  for(let i=0;i<35;i++) setTimeout(confetti,i*55);
+  for(let i=0;i<15;i++) setTimeout(floatLove,i*100);
+});
+
+function floatLove(){
+  const e=document.createElement("div");
+  e.className="sparkle";
+  e.textContent=["❤️","💕","💖","💗","💘","✨"][Math.floor(Math.random()*6)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=(18+Math.random()*22)+"px";
+  e.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),6500);
+}
+function confetti(){
+  const e=document.createElement("div");
+  e.className="confetti";
+  e.textContent=["💖","❤️","💕","✨","🌹"][Math.floor(Math.random()*5)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=(18+Math.random()*20)+"px";
+  e.style.animationDuration=(2+Math.random()*2)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),4500);
+}
+</script>
+</body>
+</html>
